@@ -28,6 +28,9 @@ int main()
   float sum = 0.0;
   srand(time(NULL));
 
+  printf("Max float is %f\n",FLT_MAX);
+  printf("Max rand is %d\n",RAND_MAX);
+
   // Create matrix A[m][n]
   m = num_gen(max_size,"m");
   n = num_gen(max_size,"n");
@@ -55,7 +58,6 @@ int main()
       sum = 0;
     }
   }
-
   array_print(m,q,X);
 
   return 0;
@@ -63,7 +65,7 @@ int main()
 
 int num_gen(int max_size, char *var) {
   int result =  rand()%max_size  + 1; // we allow up to max
-  printf("%s=%d\n",var,result);
+  printf("%s=%i\n",var,result);
   return result;
 }
 
@@ -81,7 +83,7 @@ void array_gen(size_t x, size_t y, float A[x][y])
 
 void array_print(size_t x, size_t y, float A[x][y])
 {
-  printf("Matrix[%d][%d]\n",x,y);
+  printf("Matrix[%i][%i]\n",x,y);
   int i, j;
   for (i = 0; i < x; i++) {
     for (j = 0; j < y; j++) {
