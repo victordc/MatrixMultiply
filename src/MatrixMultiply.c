@@ -81,6 +81,7 @@ void array_gen(size_t x, size_t y, float A[x][y])
 
 void array_print(size_t x, size_t y, float A[x][y])
 {
+  printf("Matrix[%d][%d]\n",x,y);
   int i, j;
   for (i = 0; i < x; i++) {
     for (j = 0; j < y; j++) {
