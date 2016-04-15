@@ -33,10 +33,12 @@ int main()
   int tile_size;
   srand(time(NULL));
   int x, t;
-  for (x = 0; pow(2,x) <= 512; x++) {
-    max_size = pow(2,x);
-    for (t = 0; pow(2,t) <= max_size; t++) {
-      tile_size = pow(2,t);
+  //for (x = 0; pow(2,x) <= 512; x++) {
+    //max_size = pow(2,x);
+  for (x = 0; 16*x <= 512; x++) {
+    max_size = 16*x;
+    //for (t = 0; pow(2,t) <= max_size; t++) {
+      //tile_size = pow(2,t);
 
       // Create matrix A[m][n]
       //  m = num_gen(max_size,"m");
@@ -60,16 +62,16 @@ int main()
       // A[m][n] * B[p][q] = X[m][q]
       float X[m][q];
 
-      //multiply_basic(m,p,q,A,B,X);
-      multiply_tiled(m,p,q,A,B,X,tile_size);
+      multiply_basic(m,p,q,A,B,X);
+      //multiply_tiled(m,p,q,A,B,X,tile_size);
 
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-      //printf("Array size = %d, Total time = %f\n",max_size, time_spent);
-      printf("Array size = %d, Tile size = %d, Total time = %f\n",max_size, tile_size, time_spent);
+      printf("Array size = %d, Total time = %f\n",max_size, time_spent);
+      //printf("Array size = %d, Tile size = %d, Total time = %f\n",max_size, tile_size, time_spent);
 
       //  array_print(m,q,X);
-    }
+    //}
   }
 
   return 0;
