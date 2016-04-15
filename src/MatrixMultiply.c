@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#define min(a,b) fmin(a,b)
 
 int num_gen(int max_size, char *var);
 void array_gen(size_t x, size_t y, float A[x][y]);
@@ -33,10 +32,11 @@ int main()
   double time_spent;
   int tile_size;
   srand(time(NULL));
-  for (int x = 400; x <= 400; x+=5) {
-    max_size = x;
-    for (int t = 1; t <= 400; t++) {
-      tile_size = t;
+  int x, t;
+  for (x = 0; pow(2,x) <= 512; x++) {
+    max_size = pow(2,x);
+    for (t = 0; pow(2,t) <= max_size; t++) {
+      tile_size = pow(2,t);
 
       // Create matrix A[m][n]
       //  m = num_gen(max_size,"m");
@@ -45,14 +45,14 @@ int main()
       n=m; q=m;
       float A[m][n];
       array_gen(m,n,A);
-      //  array_print(m,n,A);
+      //array_print(m,n,A);
 
       // Create matrix B[p][q]
       p = n; // in order for MM to be valid
       //  q = num_gen(max_size, "q");
       float B[p][q];
       array_gen(p,q,B);
-      //  array_print(p,q,B);
+      //array_print(p,q,B);
 
       begin = clock();
 
@@ -63,10 +63,10 @@ int main()
       //multiply_basic(m,p,q,A,B,X);
       multiply_tiled(m,p,q,A,B,X,tile_size);
 
-
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-      printf("Array size = %d, Tile size = %d, Total time = %g\n",max_size, tile_size, time_spent);
+      //printf("Array size = %d, Total time = %f\n",max_size, time_spent);
+      printf("Array size = %d, Tile size = %d, Total time = %f\n",max_size, tile_size, time_spent);
 
       //  array_print(m,q,X);
     }
@@ -128,8 +128,8 @@ void multiply_tiled(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],floa
   int i, ii, j, jj, k;
   for (ii = 0; ii < x; ii+=tile_size) {
     for (jj = 0; jj < z; jj+=tile_size) {
-      for (i = ii; i < min(ii+tile_size-1,x); i++) {
-        for (j = jj; j < min(jj+tile_size-1,z); j++) {
+      for (i = ii; i < fmin(ii+tile_size-1,x); i++) {
+        for (j = jj; j < fmin(jj+tile_size-1,z); j++) {
           for (k = 0; k < y; k++) {
             sum = sum + A[i][k]*B[k][j];
           }
