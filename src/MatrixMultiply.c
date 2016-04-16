@@ -60,8 +60,8 @@ int main()
 
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-      printf("Array size = %d, Total time = %f\n",max_size, time_spent);
-      //printf("Array size = %d, Tile size = %d, Total time = %f\n",max_size, tile_size, time_spent);
+      printf("Array size = %dx%d, Total time = %f\n",max_size,max_size, time_spent);
+      //printf("Array size = %dx%d, Tile size = %d, Total time = %f\n",max_size,max_size, tile_size, time_spent);
       //  array_print(m,m,X);
     //}
   }
