@@ -30,11 +30,11 @@ int main()
   srand(time(NULL));
   int x, t;
 
-//  for (x = 1; 16*x <= 512; x++) {
-//    max_size = 16*x;
+  //  for (x = 1; 16*x <= 512; x++) {
+  //    max_size = 16*x;
   for (x = 0; pow(2,x) <= 512; x++) {
     max_size = pow(2,x);
-      for (t = 0; pow(2,t) <= max_size; t++) {
+    for (t = 0; pow(2,t) <= max_size; t++) {
       tile_size = pow(2,t);
 
       // Create matrix A[m][n]
@@ -55,12 +55,12 @@ int main()
       // A[m][n] * B[p][q] = X[m][q]
       float X[m][m];
 
-//      multiply_basic(m,A,B,X);
+      //      multiply_basic(m,A,B,X);
       multiply_tiled(m,A,B,X,tile_size);
 
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//      printf("Array size = %dx%d, Total time = %f\n",max_size,max_size, time_spent);
+      //      printf("Array size = %dx%d, Total time = %f\n",max_size,max_size, time_spent);
       printf("Array size = %dx%d, Tile size = %d, Total time = %f\n",max_size,max_size, tile_size, time_spent);
       //  array_print(m,m,X);
     }
@@ -113,16 +113,19 @@ void multiply_tiled(size_t m,float A[m][m],float B[m][m],float X[m][m],int tile_
   // Fun with Matrix Multiply
   // A[m][m] * B[m][m] = X[m][m] by tile_size
   float sum = 0.0;
-  int i, ii, j, jj, k;
-  for (ii = 0; ii < m; ii+=tile_size) {
-    for (jj = 0; jj < m; jj+=tile_size) {
-      for (k = 0; k < m; k++) {
-        for (j = jj; j < fmin(jj+tile_size-1,m); j++) {
+  int i, j, jj, k, kk;
+  for (jj=0; jj<m; jj+=tile_size) {
+    for (i=0; i<m; i++)
+      for (j=jj; j < fmin(jj+tile_size,m); j++)
+        X[i][j] = 0.0;
+    for (kk=0; kk<m; kk+=tile_size) {
+      for (i=0; i<m; i++) {
+        for (j=jj; j < fmin(jj+tile_size,m); j++) {
           sum = 0.0;
-          for (i = ii; i < fmin(ii+tile_size-1,m); i++) {
-            sum = sum + A[i][k]*B[k][j];
+          for (k=kk; k < fmin(kk+tile_size,m); k++) {
+            sum += A[i][k] * B[k][j];
           }
-          X[i][j] = sum;
+          X[i][j] += sum;
         }
       }
     }
