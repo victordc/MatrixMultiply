@@ -55,8 +55,8 @@ int main()
       // A[m][n] * B[p][q] = X[m][q]
       float X[m][m];
 
-      multiply_basic(m,A,B,X);
-      //multiply_tiled(m,A,B,X,tile_size);
+//      multiply_basic(m,A,B,X);
+      multiply_tiled(m,A,B,X,tile_size);
 
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
