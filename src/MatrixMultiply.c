@@ -30,12 +30,12 @@ int main()
   srand(time(NULL));
   int x, t;
 
-  for (x = 1; 16*x <= 512; x++) {
-    max_size = 16*x;
-//  for (x = 0; pow(2,x) <= 512; x++) {
-//    max_size = pow(2,x);
-//      for (t = 0; pow(2,t) <= max_size; t++) {
-//      tile_size = pow(2,t);
+//  for (x = 1; 16*x <= 512; x++) {
+//    max_size = 16*x;
+  for (x = 0; pow(2,x) <= 512; x++) {
+    max_size = pow(2,x);
+      for (t = 0; pow(2,t) <= max_size; t++) {
+      tile_size = pow(2,t);
 
       // Create matrix A[m][n]
       m = max_size;
@@ -60,10 +60,10 @@ int main()
 
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-      printf("Array size = %dx%d, Total time = %f\n",max_size,max_size, time_spent);
-      //printf("Array size = %dx%d, Tile size = %d, Total time = %f\n",max_size,max_size, tile_size, time_spent);
+//      printf("Array size = %dx%d, Total time = %f\n",max_size,max_size, time_spent);
+      printf("Array size = %dx%d, Tile size = %d, Total time = %f\n",max_size,max_size, tile_size, time_spent);
       //  array_print(m,m,X);
-    //}
+    }
   }
 
   return 0;
