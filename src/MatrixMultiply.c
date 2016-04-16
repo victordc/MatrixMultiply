@@ -29,6 +29,7 @@ int main()
   double time_spent;
   srand(time(NULL));
   int x, t;
+  int i, j;
 
   //  for (x = 1; 16*x <= 512; x++) {
   //    max_size = 16*x;
@@ -52,6 +53,12 @@ int main()
       // Fun with Matrix Multiply
       // A[m][n] * B[p][q] = X[m][q]
       float X[m][m];
+      //Initialize output
+      for (i=0; i<m; i++) {
+        for (j=0; j<m; j++) {
+          X[i][j] = 0.0;
+        }
+      }
 
       begin = clock();
 
@@ -116,12 +123,6 @@ void multiply_tiled(size_t m,float A[m][m],float B[m][m],float X[m][m],int tile_
   int i, j, jj, k, kk;
   //Horizontal tile direction
   for (jj=0; jj<m; jj+=tile_size) {
-    //Initialize output
-    for (i=0; i<m; i++) {
-      for (j=jj; j < fmin(jj+tile_size,m); j++) {
-        X[i][j] = 0.0;
-      }
-    }
     //Vertical tile direction
     for (kk=0; kk<m; kk+=tile_size) {
       for (i=0; i<m; i++) {
