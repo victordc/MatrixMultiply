@@ -18,7 +18,7 @@ int num_gen(int max_size, char *var);
 void array_gen(size_t x, size_t y, float A[x][y]);
 void array_print(int x, int y, float A[x][y]);
 void multiply_basic(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q]);
-void multiply_tiled(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q]),int tile_size);
+void multiply_tiled(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q],int tile_size);
 
 
 // Fun with Matrix Multiply
@@ -125,11 +125,11 @@ void multiply_basic(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],floa
 
 void multiply_tiled(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q],int tile_size) {
   // Fun with Matrix Multiply
-  // A[m][n] * B[p][q] = X[m][q] by tile_size
+  // A[m][n] * B[p=n][q] = X[m][q] by tile_size
   float sum = 0.0;
   int i, ii, j, jj, k;
-  for (ii = 0; ii < x; ii+=tile_size) {
-    for (jj = 0; jj < z; jj+=tile_size) {
+  for (ii = 0; ii < m; ii+=tile_size) {
+    for (jj = 0; jj < q; jj+=tile_size) {
       for (i = ii; i < fmin(ii+tile_size-1,m); i++) {
         for (j = jj; j < fmin(jj+tile_size-1,q); j++) {
           for (k = 0; k < n; k++) {
