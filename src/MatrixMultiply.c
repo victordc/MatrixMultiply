@@ -17,8 +17,8 @@
 int num_gen(int max_size, char *var);
 void array_gen(size_t x, size_t y, float A[x][y]);
 void array_print(int x, int y, float A[x][y]);
-void multiply_basic(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],float X[x][z]);
-void multiply_tiled(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],float X[x][z],int tile_size);
+void multiply_basic(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q]);
+void multiply_tiled(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q]),int tile_size);
 
 
 // Fun with Matrix Multiply
@@ -107,14 +107,14 @@ void array_print(int x, int y, float A[x][y])
   }
 }
 
-void multiply_basic(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],float X[x][z]) {
+void multiply_basic(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q]) {
   // Fun with Matrix Multiply
-  // A[m][n] * B[p][q] = X[m][q]
+  // A[m][n] * B[p=n][q] = X[m][q]
   float sum = 0.0;
   int i, j, k;
-  for (i = 0; i < x; i++) {
-    for (j = 0; j < y; j++) {
-      for (k = 0; k < z; k++) {
+  for (i = 0; i < m; i++) {
+    for (j = 0; j < q; j++) {
+      for (k = 0; k < n; k++) {
         sum = sum + A[i][k]*B[k][j];
       }
       X[i][j] = sum;
@@ -123,16 +123,16 @@ void multiply_basic(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],floa
   }
 }
 
-void multiply_tiled(size_t x, size_t y,size_t z,float A[x][y],float B[y][z],float X[x][z],int tile_size) {
+void multiply_tiled(size_t m, size_t n,size_t q,float A[m][n],float B[n][q],float X[m][q],int tile_size) {
   // Fun with Matrix Multiply
   // A[m][n] * B[p][q] = X[m][q] by tile_size
   float sum = 0.0;
   int i, ii, j, jj, k;
   for (ii = 0; ii < x; ii+=tile_size) {
     for (jj = 0; jj < z; jj+=tile_size) {
-      for (i = ii; i < fmin(ii+tile_size-1,x); i++) {
-        for (j = jj; j < fmin(jj+tile_size-1,z); j++) {
-          for (k = 0; k < y; k++) {
+      for (i = ii; i < fmin(ii+tile_size-1,m); i++) {
+        for (j = jj; j < fmin(jj+tile_size-1,q); j++) {
+          for (k = 0; k < n; k++) {
             sum = sum + A[i][k]*B[k][j];
           }
           X[i][j] = sum;
