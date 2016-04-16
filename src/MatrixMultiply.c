@@ -120,16 +120,16 @@ void multiply_tiled(size_t m,float A[m][m],float B[m][m],float X[m][m],int tile_
   // Fun with Matrix Multiply
   // A[m][m] * B[m][m] = X[m][m] by tile_size
   float sum = 0.0;
-  int i, j, jj, k, kk;
+  int i, ii, j, jj, k, kk;
   //Horizontal tile direction
-  for (jj=0; jj<m; jj+=tile_size) {
+  for (ii=0; ii<m; ii+=tile_size) {
     //Vertical tile direction
-    for (kk=0; kk<m; kk+=tile_size) {
-      for (i=0; i<m; i++) {
+    for (jj=0; jj<m; jj+=tile_size) {
+      for (k=0; k<m; k++) {
         //Kernel
-        for (j=jj; j < fmin(jj+tile_size,m); j++) {
+        for (i=ii; i < fmin(ii+tile_size,m); i++) {
           sum = 0.0;
-          for (k=kk; k < fmin(kk+tile_size,m); k++) {
+          for (j=jj; j < fmin(jj+tile_size,m); j++) {
             sum += A[i][k] * B[k][j];
           }
           X[i][j] += sum;
