@@ -49,11 +49,11 @@ int main()
       array_gen(m,m,B);
       //array_print(m,m,B);
 
-      begin = clock();
-
       // Fun with Matrix Multiply
       // A[m][n] * B[p][q] = X[m][q]
       float X[m][m];
+
+      begin = clock();
 
       //      multiply_basic(m,A,B,X);
       multiply_tiled(m,A,B,X,tile_size);
