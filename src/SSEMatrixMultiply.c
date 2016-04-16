@@ -28,7 +28,7 @@ int main()
   srand(time(NULL));
   int x, t;
 
-    max_size = 512;
+    max_size = 4;
       tile_size = 1;
 
       // Create matrix A[m][n]

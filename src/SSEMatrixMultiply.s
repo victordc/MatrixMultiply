@@ -21,7 +21,7 @@ main:
 	call	time
 	movl	%eax, %edi
 	call	srand
-	movl	$512, -52(%rbp)
+	movl	$4, -52(%rbp)
 	movl	$1, -56(%rbp)
 	movl	-52(%rbp), %eax
 	movl	%eax, -60(%rbp)
