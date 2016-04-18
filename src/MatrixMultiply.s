@@ -1,723 +1,749 @@
 	.file	"MatrixMultiply.c"
-	.intel_syntax noprefix
 	.section	.rodata
 	.align 8
-.LC2:
+.LC3:
 	.string	"Array size = %dx%d, Tile size = %d, Total time = %f\n"
 	.text
 	.globl	main
 	.type	main, @function
 main:
-	push	rbp
-	mov	rbp, rsp
-	push	r15
-	push	r14
-	push	r13
-	push	r12
-	push	rbx
-	sub	rsp, 360
-	mov	edi, 0
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbx
+	subq	$360, %rsp
+	movl	$0, %edi
 	call	time
-	mov	edi, eax
+	movl	%eax, %edi
 	call	srand
-	mov	DWORD PTR [rbp-52], 0
+	movl	$0, -52(%rbp)
 	jmp	.L2
-.L5:
-	cvtsi2sd	xmm0, DWORD PTR [rbp-52]
-	movabs	rax, 4611686018427387904
-	movapd	xmm1, xmm0
-	mov	QWORD PTR [rbp-392], rax
-	movsd	xmm0, QWORD PTR [rbp-392]
+.L9:
+	cvtsi2sd	-52(%rbp), %xmm0
+	movabsq	$4611686018427387904, %rax
+	movapd	%xmm0, %xmm1
+	movq	%rax, -392(%rbp)
+	movsd	-392(%rbp), %xmm0
 	call	pow
-	cvttsd2si	eax, xmm0
-	mov	DWORD PTR [rbp-60], eax
-	mov	DWORD PTR [rbp-56], 0
+	cvttsd2si	%xmm0, %eax
+	movl	%eax, -68(%rbp)
+	movl	$0, -56(%rbp)
 	jmp	.L3
-.L4:
-	mov	rax, rsp
-	mov	rbx, rax
-	cvtsi2sd	xmm0, DWORD PTR [rbp-56]
-	movabs	rax, 4611686018427387904
-	movapd	xmm1, xmm0
-	mov	QWORD PTR [rbp-392], rax
-	movsd	xmm0, QWORD PTR [rbp-392]
+.L8:
+	movq	%rsp, %rax
+	movq	%rax, %rbx
+	cvtsi2sd	-56(%rbp), %xmm0
+	movabsq	$4611686018427387904, %rax
+	movapd	%xmm0, %xmm1
+	movq	%rax, -392(%rbp)
+	movsd	-392(%rbp), %xmm0
 	call	pow
-	cvttsd2si	eax, xmm0
-	mov	DWORD PTR [rbp-64], eax
-	mov	eax, DWORD PTR [rbp-60]
-	mov	DWORD PTR [rbp-68], eax
-	mov	esi, DWORD PTR [rbp-68]
-	mov	edi, DWORD PTR [rbp-68]
-	movsx	rax, esi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-80], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-352], rax
-	mov	QWORD PTR [rbp-344], 0
-	movsx	rax, edi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-88], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-208], rax
-	mov	QWORD PTR [rbp-200], 0
-	movsx	rax, edi
-	mov	QWORD PTR [rbp-224], rax
-	mov	QWORD PTR [rbp-216], 0
-	mov	r8, QWORD PTR [rbp-208]
-	mov	r9, QWORD PTR [rbp-200]
-	mov	rdx, r9
-	mov	r10, QWORD PTR [rbp-224]
-	mov	r11, QWORD PTR [rbp-216]
-	imul	rdx, r10
-	mov	rax, r11
-	imul	rax, r8
-	lea	rcx, [rdx+rax]
-	mov	rax, r8
-	mul	r10
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-240], rax
-	mov	QWORD PTR [rbp-232], 0
-	movsx	rax, edi
-	mov	QWORD PTR [rbp-256], rax
-	mov	QWORD PTR [rbp-248], 0
-	mov	r8, QWORD PTR [rbp-240]
-	mov	r9, QWORD PTR [rbp-232]
-	mov	rdx, r9
-	mov	r10, QWORD PTR [rbp-256]
-	mov	r11, QWORD PTR [rbp-248]
-	imul	rdx, r10
-	mov	rax, r11
-	imul	rax, r8
-	lea	rcx, [rdx+rax]
-	mov	rax, r8
-	mul	r10
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rdx, esi
-	movsx	rax, edi
-	imul	rax, rdx
-	sal	rax, 2
-	lea	rdx, [rax+3]
-	mov	eax, 16
-	sub	rax, 1
-	add	rax, rdx
-	mov	edi, 16
-	mov	edx, 0
-	div	rdi
-	imul	rax, rax, 16
-	sub	rsp, rax
-	mov	rax, rsp
-	add	rax, 3
-	shr	rax, 2
-	sal	rax, 2
-	mov	QWORD PTR [rbp-96], rax
-	mov	rdx, QWORD PTR [rbp-96]
-	mov	eax, DWORD PTR [rbp-68]
-	movsx	rcx, eax
-	mov	eax, DWORD PTR [rbp-68]
-	cdqe
-	mov	rsi, rcx
-	mov	rdi, rax
+	cvttsd2si	%xmm0, %eax
+	movl	%eax, -72(%rbp)
+	movl	-68(%rbp), %eax
+	movl	%eax, -76(%rbp)
+	movl	-76(%rbp), %esi
+	movl	-76(%rbp), %edi
+	movslq	%esi, %rax
+	subq	$1, %rax
+	movq	%rax, -88(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -352(%rbp)
+	movq	$0, -344(%rbp)
+	movslq	%edi, %rax
+	subq	$1, %rax
+	movq	%rax, -96(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -208(%rbp)
+	movq	$0, -200(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, -224(%rbp)
+	movq	$0, -216(%rbp)
+	movq	-208(%rbp), %r8
+	movq	-200(%rbp), %r9
+	movq	%r9, %rdx
+	movq	-224(%rbp), %r10
+	movq	-216(%rbp), %r11
+	imulq	%r10, %rdx
+	movq	%r11, %rax
+	imulq	%r8, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r8, %rax
+	mulq	%r10
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rax
+	movq	%rax, -240(%rbp)
+	movq	$0, -232(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, -256(%rbp)
+	movq	$0, -248(%rbp)
+	movq	-240(%rbp), %r8
+	movq	-232(%rbp), %r9
+	movq	%r9, %rdx
+	movq	-256(%rbp), %r10
+	movq	-248(%rbp), %r11
+	imulq	%r10, %rdx
+	movq	%r11, %rax
+	imulq	%r8, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r8, %rax
+	mulq	%r10
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rdx
+	movslq	%edi, %rax
+	imulq	%rdx, %rax
+	salq	$2, %rax
+	leaq	3(%rax), %rdx
+	movl	$16, %eax
+	subq	$1, %rax
+	addq	%rdx, %rax
+	movl	$16, %edi
+	movl	$0, %edx
+	divq	%rdi
+	imulq	$16, %rax, %rax
+	subq	%rax, %rsp
+	movq	%rsp, %rax
+	addq	$3, %rax
+	shrq	$2, %rax
+	salq	$2, %rax
+	movq	%rax, -104(%rbp)
+	movq	-104(%rbp), %rdx
+	movl	-76(%rbp), %eax
+	movslq	%eax, %rcx
+	movl	-76(%rbp), %eax
+	cltq
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
 	call	array_gen
-	mov	esi, DWORD PTR [rbp-68]
-	mov	edi, DWORD PTR [rbp-68]
-	movsx	rax, esi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-104], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-368], rax
-	mov	QWORD PTR [rbp-360], 0
-	movsx	rax, edi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-112], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-272], rax
-	mov	QWORD PTR [rbp-264], 0
-	movsx	rax, edi
-	mov	QWORD PTR [rbp-288], rax
-	mov	QWORD PTR [rbp-280], 0
-	mov	r8, QWORD PTR [rbp-272]
-	mov	r9, QWORD PTR [rbp-264]
-	mov	rdx, r9
-	mov	r10, QWORD PTR [rbp-288]
-	mov	r11, QWORD PTR [rbp-280]
-	imul	rdx, r10
-	mov	rax, r11
-	imul	rax, r8
-	lea	rcx, [rdx+rax]
-	mov	rax, r8
-	mul	r10
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-304], rax
-	mov	QWORD PTR [rbp-296], 0
-	movsx	rax, edi
-	mov	QWORD PTR [rbp-320], rax
-	mov	QWORD PTR [rbp-312], 0
-	mov	r8, QWORD PTR [rbp-304]
-	mov	r9, QWORD PTR [rbp-296]
-	mov	rdx, r9
-	mov	r10, QWORD PTR [rbp-320]
-	mov	r11, QWORD PTR [rbp-312]
-	imul	rdx, r10
-	mov	rax, r11
-	imul	rax, r8
-	lea	rcx, [rdx+rax]
-	mov	rax, r8
-	mul	r10
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rdx, esi
-	movsx	rax, edi
-	imul	rax, rdx
-	sal	rax, 2
-	lea	rdx, [rax+3]
-	mov	eax, 16
-	sub	rax, 1
-	add	rax, rdx
-	mov	edi, 16
-	mov	edx, 0
-	div	rdi
-	imul	rax, rax, 16
-	sub	rsp, rax
-	mov	rax, rsp
-	add	rax, 3
-	shr	rax, 2
-	sal	rax, 2
-	mov	QWORD PTR [rbp-120], rax
-	mov	rdx, QWORD PTR [rbp-120]
-	mov	eax, DWORD PTR [rbp-68]
-	movsx	rcx, eax
-	mov	eax, DWORD PTR [rbp-68]
-	cdqe
-	mov	rsi, rcx
-	mov	rdi, rax
+	movl	-76(%rbp), %esi
+	movl	-76(%rbp), %edi
+	movslq	%esi, %rax
+	subq	$1, %rax
+	movq	%rax, -112(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -368(%rbp)
+	movq	$0, -360(%rbp)
+	movslq	%edi, %rax
+	subq	$1, %rax
+	movq	%rax, -120(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -272(%rbp)
+	movq	$0, -264(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, -288(%rbp)
+	movq	$0, -280(%rbp)
+	movq	-272(%rbp), %r8
+	movq	-264(%rbp), %r9
+	movq	%r9, %rdx
+	movq	-288(%rbp), %r10
+	movq	-280(%rbp), %r11
+	imulq	%r10, %rdx
+	movq	%r11, %rax
+	imulq	%r8, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r8, %rax
+	mulq	%r10
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rax
+	movq	%rax, -304(%rbp)
+	movq	$0, -296(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, -320(%rbp)
+	movq	$0, -312(%rbp)
+	movq	-304(%rbp), %r8
+	movq	-296(%rbp), %r9
+	movq	%r9, %rdx
+	movq	-320(%rbp), %r10
+	movq	-312(%rbp), %r11
+	imulq	%r10, %rdx
+	movq	%r11, %rax
+	imulq	%r8, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r8, %rax
+	mulq	%r10
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rdx
+	movslq	%edi, %rax
+	imulq	%rdx, %rax
+	salq	$2, %rax
+	leaq	3(%rax), %rdx
+	movl	$16, %eax
+	subq	$1, %rax
+	addq	%rdx, %rax
+	movl	$16, %edi
+	movl	$0, %edx
+	divq	%rdi
+	imulq	$16, %rax, %rax
+	subq	%rax, %rsp
+	movq	%rsp, %rax
+	addq	$3, %rax
+	shrq	$2, %rax
+	salq	$2, %rax
+	movq	%rax, -128(%rbp)
+	movq	-128(%rbp), %rdx
+	movl	-76(%rbp), %eax
+	movslq	%eax, %rcx
+	movl	-76(%rbp), %eax
+	cltq
+	movq	%rcx, %rsi
+	movq	%rax, %rdi
 	call	array_gen
+	movl	-76(%rbp), %esi
+	movl	-76(%rbp), %edi
+	movslq	%esi, %rax
+	subq	$1, %rax
+	movq	%rax, -136(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -384(%rbp)
+	movq	$0, -376(%rbp)
+	movslq	%esi, %rax
+	leaq	0(,%rax,4), %r8
+	movslq	%edi, %rax
+	subq	$1, %rax
+	movq	%rax, -144(%rbp)
+	movslq	%esi, %rax
+	movq	%rax, -336(%rbp)
+	movq	$0, -328(%rbp)
+	movslq	%edi, %rax
+	movq	%rax, -192(%rbp)
+	movq	$0, -184(%rbp)
+	movq	-336(%rbp), %r9
+	movq	-328(%rbp), %r10
+	movq	%r10, %rdx
+	imulq	-192(%rbp), %rdx
+	movq	-184(%rbp), %rax
+	imulq	%r9, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r9, %rax
+	mulq	-192(%rbp)
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rax
+	movq	%rax, %r14
+	movl	$0, %r15d
+	movslq	%edi, %rax
+	movq	%rax, %r12
+	movl	$0, %r13d
+	movq	%r15, %rdx
+	imulq	%r12, %rdx
+	movq	%r13, %rax
+	imulq	%r14, %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	%r14, %rax
+	mulq	%r12
+	addq	%rdx, %rcx
+	movq	%rcx, %rdx
+	movslq	%esi, %rdx
+	movslq	%edi, %rax
+	imulq	%rdx, %rax
+	salq	$2, %rax
+	leaq	3(%rax), %rdx
+	movl	$16, %eax
+	subq	$1, %rax
+	addq	%rdx, %rax
+	movl	$16, %edi
+	movl	$0, %edx
+	divq	%rdi
+	imulq	$16, %rax, %rax
+	subq	%rax, %rsp
+	movq	%rsp, %rax
+	addq	$3, %rax
+	shrq	$2, %rax
+	salq	$2, %rax
+	movq	%rax, -152(%rbp)
+	movl	$0, -60(%rbp)
+	jmp	.L4
+.L7:
+	movl	$0, -64(%rbp)
+	jmp	.L5
+.L6:
+	movq	%r8, %rsi
+	shrq	$2, %rsi
+	movq	-152(%rbp), %rcx
+	movl	-64(%rbp), %eax
+	movslq	%eax, %rdx
+	movl	-60(%rbp), %eax
+	cltq
+	imulq	%rsi, %rax
+	addq	%rax, %rdx
+	movl	.LC1(%rip), %eax
+	movl	%eax, (%rcx,%rdx,4)
+	addl	$1, -64(%rbp)
+.L5:
+	movl	-64(%rbp), %eax
+	cmpl	-76(%rbp), %eax
+	jl	.L6
+	addl	$1, -60(%rbp)
+.L4:
+	movl	-60(%rbp), %eax
+	cmpl	-76(%rbp), %eax
+	jl	.L7
 	call	clock
-	mov	QWORD PTR [rbp-128], rax
-	mov	esi, DWORD PTR [rbp-68]
-	mov	edi, DWORD PTR [rbp-68]
-	movsx	rax, esi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-136], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-384], rax
-	mov	QWORD PTR [rbp-376], 0
-	movsx	rax, edi
-	sub	rax, 1
-	mov	QWORD PTR [rbp-144], rax
-	movsx	rax, esi
-	mov	QWORD PTR [rbp-336], rax
-	mov	QWORD PTR [rbp-328], 0
-	movsx	rax, edi
-	mov	QWORD PTR [rbp-192], rax
-	mov	QWORD PTR [rbp-184], 0
-	mov	r9, QWORD PTR [rbp-336]
-	mov	r10, QWORD PTR [rbp-328]
-	mov	rdx, r10
-	imul	rdx, QWORD PTR [rbp-192]
-	mov	rax, QWORD PTR [rbp-184]
-	imul	rax, r9
-	lea	rcx, [rdx+rax]
-	mov	rax, r9
-	mul	QWORD PTR [rbp-192]
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rax, esi
-	mov	r14, rax
-	mov	r15d, 0
-	movsx	rax, edi
-	mov	r12, rax
-	mov	r13d, 0
-	mov	rdx, r15
-	imul	rdx, r12
-	mov	rax, r13
-	imul	rax, r14
-	lea	rcx, [rdx+rax]
-	mov	rax, r14
-	mul	r12
-	add	rcx, rdx
-	mov	rdx, rcx
-	movsx	rdx, esi
-	movsx	rax, edi
-	imul	rax, rdx
-	sal	rax, 2
-	lea	rdx, [rax+3]
-	mov	eax, 16
-	sub	rax, 1
-	add	rax, rdx
-	mov	esi, 16
-	mov	edx, 0
-	div	rsi
-	imul	rax, rax, 16
-	sub	rsp, rax
-	mov	rax, rsp
-	add	rax, 3
-	shr	rax, 2
-	sal	rax, 2
-	mov	QWORD PTR [rbp-152], rax
-	mov	rcx, QWORD PTR [rbp-152]
-	mov	rdx, QWORD PTR [rbp-120]
-	mov	rsi, QWORD PTR [rbp-96]
-	mov	eax, DWORD PTR [rbp-68]
-	movsx	rdi, eax
-	mov	eax, DWORD PTR [rbp-64]
-	mov	r8d, eax
+	movq	%rax, -160(%rbp)
+	movq	-152(%rbp), %rcx
+	movq	-128(%rbp), %rdx
+	movq	-104(%rbp), %rsi
+	movl	-76(%rbp), %eax
+	movslq	%eax, %rdi
+	movl	-72(%rbp), %eax
+	movl	%eax, %r8d
 	call	multiply_tiled
 	call	clock
-	mov	QWORD PTR [rbp-160], rax
-	mov	rdx, QWORD PTR [rbp-128]
-	mov	rax, QWORD PTR [rbp-160]
-	sub	rax, rdx
-	cvtsi2sd	xmm0, rax
-	movsd	xmm1, QWORD PTR .LC1[rip]
-	divsd	xmm0, xmm1
-	movsd	QWORD PTR [rbp-168], xmm0
-	mov	rax, QWORD PTR [rbp-168]
-	mov	ecx, DWORD PTR [rbp-64]
-	mov	edx, DWORD PTR [rbp-60]
-	mov	esi, DWORD PTR [rbp-60]
-	mov	QWORD PTR [rbp-392], rax
-	movsd	xmm0, QWORD PTR [rbp-392]
-	mov	edi, OFFSET FLAT:.LC2
-	mov	eax, 1
+	movq	%rax, -168(%rbp)
+	movq	-160(%rbp), %rdx
+	movq	-168(%rbp), %rax
+	subq	%rdx, %rax
+	cvtsi2sdq	%rax, %xmm0
+	movsd	.LC2(%rip), %xmm1
+	divsd	%xmm1, %xmm0
+	movsd	%xmm0, -176(%rbp)
+	movq	-176(%rbp), %rax
+	movl	-72(%rbp), %ecx
+	movl	-68(%rbp), %edx
+	movl	-68(%rbp), %esi
+	movq	%rax, -392(%rbp)
+	movsd	-392(%rbp), %xmm0
+	movl	$.LC3, %edi
+	movl	$1, %eax
 	call	printf
-	mov	rsp, rbx
-	add	DWORD PTR [rbp-56], 1
+	movq	%rbx, %rsp
+	addl	$1, -56(%rbp)
 .L3:
-	cvtsi2sd	xmm0, DWORD PTR [rbp-56]
-	movabs	rax, 4611686018427387904
-	movapd	xmm1, xmm0
-	mov	QWORD PTR [rbp-392], rax
-	movsd	xmm0, QWORD PTR [rbp-392]
+	cvtsi2sd	-56(%rbp), %xmm0
+	movabsq	$4611686018427387904, %rax
+	movapd	%xmm0, %xmm1
+	movq	%rax, -392(%rbp)
+	movsd	-392(%rbp), %xmm0
 	call	pow
-	cvtsi2sd	xmm1, DWORD PTR [rbp-60]
-	ucomisd	xmm1, xmm0
-	jae	.L4
-	add	DWORD PTR [rbp-52], 1
+	cvtsi2sd	-68(%rbp), %xmm1
+	ucomisd	%xmm0, %xmm1
+	jae	.L8
+	addl	$1, -52(%rbp)
 .L2:
-	cvtsi2sd	xmm0, DWORD PTR [rbp-52]
-	movabs	rax, 4611686018427387904
-	movapd	xmm1, xmm0
-	mov	QWORD PTR [rbp-392], rax
-	movsd	xmm0, QWORD PTR [rbp-392]
+	cvtsi2sd	-52(%rbp), %xmm0
+	movabsq	$4611686018427387904, %rax
+	movapd	%xmm0, %xmm1
+	movq	%rax, -392(%rbp)
+	movsd	-392(%rbp), %xmm0
 	call	pow
-	movsd	xmm1, QWORD PTR .LC3[rip]
-	ucomisd	xmm1, xmm0
-	jae	.L5
-	mov	eax, 0
-	lea	rsp, [rbp-40]
-	pop	rbx
-	pop	r12
-	pop	r13
-	pop	r14
-	pop	r15
-	pop	rbp
+	movsd	.LC4(%rip), %xmm1
+	ucomisd	%xmm0, %xmm1
+	jae	.L9
+	movl	$0, %eax
+	leaq	-40(%rbp), %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
 	ret
 	.size	main, .-main
 	.globl	array_gen
 	.type	array_gen, @function
 array_gen:
-	push	rbp
-	mov	rbp, rsp
-	push	rbx
-	sub	rsp, 72
-	mov	QWORD PTR [rbp-56], rdi
-	mov	QWORD PTR [rbp-64], rsi
-	mov	QWORD PTR [rbp-72], rdx
-	mov	rbx, QWORD PTR [rbp-64]
-	mov	rax, rbx
-	sub	rax, 1
-	mov	QWORD PTR [rbp-32], rax
-	mov	r8, rbx
-	mov	r9d, 0
-	mov	DWORD PTR [rbp-20], 0
-	jmp	.L8
-.L11:
-	mov	DWORD PTR [rbp-24], 0
-	jmp	.L9
-.L10:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%rbx
+	subq	$72, %rsp
+	movq	%rdi, -56(%rbp)
+	movq	%rsi, -64(%rbp)
+	movq	%rdx, -72(%rbp)
+	movq	-64(%rbp), %rbx
+	movq	%rbx, %rax
+	subq	$1, %rax
+	movq	%rax, -32(%rbp)
+	movq	%rbx, %r8
+	movl	$0, %r9d
+	movl	$0, -20(%rbp)
+	jmp	.L12
+.L15:
+	movl	$0, -24(%rbp)
+	jmp	.L13
+.L14:
 	call	rand
-	cvtsi2ss	xmm0, eax
-	movss	xmm1, DWORD PTR .LC4[rip]
-	divss	xmm0, xmm1
-	movss	DWORD PTR [rbp-36], xmm0
-	mov	eax, DWORD PTR [rbp-20]
-	cdqe
-	imul	rax, rbx
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-72]
-	lea	rcx, [rdx+rax]
-	mov	eax, DWORD PTR [rbp-24]
-	movsx	rdx, eax
-	mov	eax, DWORD PTR [rbp-36]
-	mov	DWORD PTR [rcx+rdx*4], eax
-	add	DWORD PTR [rbp-24], 1
-.L9:
-	mov	eax, DWORD PTR [rbp-24]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-64]
-	jb	.L10
-	add	DWORD PTR [rbp-20], 1
-.L8:
-	mov	eax, DWORD PTR [rbp-20]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-56]
-	jb	.L11
-	add	rsp, 72
-	pop	rbx
-	pop	rbp
+	cvtsi2ss	%eax, %xmm0
+	movss	.LC5(%rip), %xmm1
+	divss	%xmm1, %xmm0
+	movss	%xmm0, -36(%rbp)
+	movl	-20(%rbp), %eax
+	cltq
+	imulq	%rbx, %rax
+	leaq	0(,%rax,4), %rdx
+	movq	-72(%rbp), %rax
+	leaq	(%rdx,%rax), %rcx
+	movl	-24(%rbp), %eax
+	movslq	%eax, %rdx
+	movl	-36(%rbp), %eax
+	movl	%eax, (%rcx,%rdx,4)
+	addl	$1, -24(%rbp)
+.L13:
+	movl	-24(%rbp), %eax
+	cltq
+	cmpq	-64(%rbp), %rax
+	jb	.L14
+	addl	$1, -20(%rbp)
+.L12:
+	movl	-20(%rbp), %eax
+	cltq
+	cmpq	-56(%rbp), %rax
+	jb	.L15
+	addq	$72, %rsp
+	popq	%rbx
+	popq	%rbp
 	ret
 	.size	array_gen, .-array_gen
 	.section	.rodata
-.LC5:
-	.string	"Matrix[%i][%i]\n"
 .LC6:
+	.string	"Matrix[%i][%i]\n"
+.LC7:
 	.string	"%f\t"
 	.text
 	.globl	array_print
 	.type	array_print, @function
 array_print:
-	push	rbp
-	mov	rbp, rsp
-	push	rbx
-	sub	rsp, 40
-	mov	DWORD PTR [rbp-36], edi
-	mov	DWORD PTR [rbp-40], esi
-	mov	QWORD PTR [rbp-48], rdx
-	mov	ebx, DWORD PTR [rbp-40]
-	movsx	rax, ebx
-	sub	rax, 1
-	mov	QWORD PTR [rbp-32], rax
-	movsx	rax, ebx
-	mov	r8, rax
-	mov	r9d, 0
-	mov	edx, DWORD PTR [rbp-40]
-	mov	eax, DWORD PTR [rbp-36]
-	mov	esi, eax
-	mov	edi, OFFSET FLAT:.LC5
-	mov	eax, 0
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%rbx
+	subq	$40, %rsp
+	movl	%edi, -36(%rbp)
+	movl	%esi, -40(%rbp)
+	movq	%rdx, -48(%rbp)
+	movl	-40(%rbp), %ebx
+	movslq	%ebx, %rax
+	subq	$1, %rax
+	movq	%rax, -32(%rbp)
+	movslq	%ebx, %rax
+	movq	%rax, %r8
+	movl	$0, %r9d
+	movl	-40(%rbp), %edx
+	movl	-36(%rbp), %eax
+	movl	%eax, %esi
+	movl	$.LC6, %edi
+	movl	$0, %eax
 	call	printf
-	mov	DWORD PTR [rbp-20], 0
-	jmp	.L13
-.L16:
-	mov	DWORD PTR [rbp-24], 0
-	jmp	.L14
-.L15:
-	mov	eax, DWORD PTR [rbp-20]
-	movsx	rdx, eax
-	movsx	rax, ebx
-	imul	rax, rdx
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-48]
-	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-24]
-	cdqe
-	movss	xmm0, DWORD PTR [rdx+rax*4]
-	unpcklps	xmm0, xmm0
-	cvtps2pd	xmm0, xmm0
-	mov	edi, OFFSET FLAT:.LC6
-	mov	eax, 1
+	movl	$0, -20(%rbp)
+	jmp	.L17
+.L20:
+	movl	$0, -24(%rbp)
+	jmp	.L18
+.L19:
+	movl	-20(%rbp), %eax
+	movslq	%eax, %rdx
+	movslq	%ebx, %rax
+	imulq	%rdx, %rax
+	leaq	0(,%rax,4), %rdx
+	movq	-48(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-24(%rbp), %eax
+	cltq
+	movss	(%rdx,%rax,4), %xmm0
+	unpcklps	%xmm0, %xmm0
+	cvtps2pd	%xmm0, %xmm0
+	movl	$.LC7, %edi
+	movl	$1, %eax
 	call	printf
-	add	DWORD PTR [rbp-24], 1
-.L14:
-	mov	eax, DWORD PTR [rbp-24]
-	cmp	eax, DWORD PTR [rbp-40]
-	jl	.L15
-	mov	edi, 10
+	addl	$1, -24(%rbp)
+.L18:
+	movl	-24(%rbp), %eax
+	cmpl	-40(%rbp), %eax
+	jl	.L19
+	movl	$10, %edi
 	call	putchar
-	add	DWORD PTR [rbp-20], 1
-.L13:
-	mov	eax, DWORD PTR [rbp-20]
-	cmp	eax, DWORD PTR [rbp-36]
-	jl	.L16
-	add	rsp, 40
-	pop	rbx
-	pop	rbp
+	addl	$1, -20(%rbp)
+.L17:
+	movl	-20(%rbp), %eax
+	cmpl	-36(%rbp), %eax
+	jl	.L20
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%rbp
 	ret
 	.size	array_print, .-array_print
 	.globl	multiply_basic
 	.type	multiply_basic, @function
 multiply_basic:
-	push	rbp
-	mov	rbp, rsp
-	push	r13
-	push	r12
-	mov	QWORD PTR [rbp-72], rdi
-	mov	QWORD PTR [rbp-80], rsi
-	mov	QWORD PTR [rbp-88], rdx
-	mov	QWORD PTR [rbp-96], rcx
-	mov	rax, QWORD PTR [rbp-72]
-	mov	rdx, rax
-	sub	rdx, 1
-	mov	QWORD PTR [rbp-40], rdx
-	mov	r12, rax
-	mov	r13d, 0
-	mov	rdx, QWORD PTR [rbp-72]
-	mov	rcx, rdx
-	sub	rcx, 1
-	mov	QWORD PTR [rbp-48], rcx
-	mov	r10, rdx
-	mov	r11d, 0
-	mov	rcx, QWORD PTR [rbp-72]
-	mov	rsi, rcx
-	sub	rsi, 1
-	mov	QWORD PTR [rbp-56], rsi
-	mov	r8, rcx
-	mov	r9d, 0
-	mov	esi, DWORD PTR .LC7[rip]
-	mov	DWORD PTR [rbp-20], esi
-	mov	DWORD PTR [rbp-24], 0
-	jmp	.L18
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r13
+	pushq	%r12
+	movq	%rdi, -72(%rbp)
+	movq	%rsi, -80(%rbp)
+	movq	%rdx, -88(%rbp)
+	movq	%rcx, -96(%rbp)
+	movq	-72(%rbp), %rax
+	movq	%rax, %rdx
+	subq	$1, %rdx
+	movq	%rdx, -40(%rbp)
+	movq	%rax, %r12
+	movl	$0, %r13d
+	movq	-72(%rbp), %rdx
+	movq	%rdx, %rcx
+	subq	$1, %rcx
+	movq	%rcx, -48(%rbp)
+	movq	%rdx, %r10
+	movl	$0, %r11d
+	movq	-72(%rbp), %rcx
+	movq	%rcx, %rsi
+	subq	$1, %rsi
+	movq	%rsi, -56(%rbp)
+	movq	%rcx, %r8
+	movl	$0, %r9d
+	movl	.LC1(%rip), %esi
+	movl	%esi, -20(%rbp)
+	movl	$0, -24(%rbp)
+	jmp	.L22
+.L27:
+	movl	$0, -28(%rbp)
+	jmp	.L23
+.L26:
+	movl	$0, -32(%rbp)
+	jmp	.L24
+.L25:
+	movl	-24(%rbp), %esi
+	movslq	%esi, %rsi
+	imulq	%rax, %rsi
+	leaq	0(,%rsi,4), %rdi
+	movq	-80(%rbp), %rsi
+	addq	%rsi, %rdi
+	movl	-32(%rbp), %esi
+	movslq	%esi, %rsi
+	movss	(%rdi,%rsi,4), %xmm1
+	movl	-32(%rbp), %esi
+	movslq	%esi, %rsi
+	imulq	%rdx, %rsi
+	leaq	0(,%rsi,4), %rdi
+	movq	-88(%rbp), %rsi
+	addq	%rsi, %rdi
+	movl	-28(%rbp), %esi
+	movslq	%esi, %rsi
+	movss	(%rdi,%rsi,4), %xmm0
+	mulss	%xmm1, %xmm0
+	movss	-20(%rbp), %xmm1
+	addss	%xmm1, %xmm0
+	movss	%xmm0, -20(%rbp)
+	addl	$1, -32(%rbp)
+.L24:
+	movl	-32(%rbp), %esi
+	movslq	%esi, %rsi
+	cmpq	-72(%rbp), %rsi
+	jb	.L25
+	movl	-24(%rbp), %esi
+	movslq	%esi, %rsi
+	imulq	%rcx, %rsi
+	leaq	0(,%rsi,4), %rdi
+	movq	-96(%rbp), %rsi
+	leaq	(%rdi,%rsi), %r8
+	movl	-28(%rbp), %esi
+	movslq	%esi, %rdi
+	movl	-20(%rbp), %esi
+	movl	%esi, (%r8,%rdi,4)
+	movl	.LC1(%rip), %esi
+	movl	%esi, -20(%rbp)
+	addl	$1, -28(%rbp)
 .L23:
-	mov	DWORD PTR [rbp-28], 0
-	jmp	.L19
+	movl	-28(%rbp), %esi
+	movslq	%esi, %rsi
+	cmpq	-72(%rbp), %rsi
+	jb	.L26
+	addl	$1, -24(%rbp)
 .L22:
-	mov	DWORD PTR [rbp-32], 0
-	jmp	.L20
-.L21:
-	mov	esi, DWORD PTR [rbp-24]
-	movsx	rsi, esi
-	imul	rsi, rax
-	lea	rdi, [0+rsi*4]
-	mov	rsi, QWORD PTR [rbp-80]
-	add	rdi, rsi
-	mov	esi, DWORD PTR [rbp-32]
-	movsx	rsi, esi
-	movss	xmm1, DWORD PTR [rdi+rsi*4]
-	mov	esi, DWORD PTR [rbp-32]
-	movsx	rsi, esi
-	imul	rsi, rdx
-	lea	rdi, [0+rsi*4]
-	mov	rsi, QWORD PTR [rbp-88]
-	add	rdi, rsi
-	mov	esi, DWORD PTR [rbp-28]
-	movsx	rsi, esi
-	movss	xmm0, DWORD PTR [rdi+rsi*4]
-	mulss	xmm0, xmm1
-	movss	xmm1, DWORD PTR [rbp-20]
-	addss	xmm0, xmm1
-	movss	DWORD PTR [rbp-20], xmm0
-	add	DWORD PTR [rbp-32], 1
-.L20:
-	mov	esi, DWORD PTR [rbp-32]
-	movsx	rsi, esi
-	cmp	rsi, QWORD PTR [rbp-72]
-	jb	.L21
-	mov	esi, DWORD PTR [rbp-24]
-	movsx	rsi, esi
-	imul	rsi, rcx
-	lea	rdi, [0+rsi*4]
-	mov	rsi, QWORD PTR [rbp-96]
-	lea	r8, [rdi+rsi]
-	mov	esi, DWORD PTR [rbp-28]
-	movsx	rdi, esi
-	mov	esi, DWORD PTR [rbp-20]
-	mov	DWORD PTR [r8+rdi*4], esi
-	mov	esi, DWORD PTR .LC7[rip]
-	mov	DWORD PTR [rbp-20], esi
-	add	DWORD PTR [rbp-28], 1
-.L19:
-	mov	esi, DWORD PTR [rbp-28]
-	movsx	rsi, esi
-	cmp	rsi, QWORD PTR [rbp-72]
-	jb	.L22
-	add	DWORD PTR [rbp-24], 1
-.L18:
-	mov	esi, DWORD PTR [rbp-24]
-	movsx	rsi, esi
-	cmp	rsi, QWORD PTR [rbp-72]
-	jb	.L23
-	pop	r12
-	pop	r13
-	pop	rbp
+	movl	-24(%rbp), %esi
+	movslq	%esi, %rsi
+	cmpq	-72(%rbp), %rsi
+	jb	.L27
+	popq	%r12
+	popq	%r13
+	popq	%rbp
 	ret
 	.size	multiply_basic, .-multiply_basic
 	.globl	multiply_tiled
 	.type	multiply_tiled, @function
 multiply_tiled:
-	push	rbp
-	mov	rbp, rsp
-	push	r14
-	push	r13
-	push	r12
-	push	rbx
-	sub	rsp, 96
-	mov	QWORD PTR [rbp-88], rdi
-	mov	QWORD PTR [rbp-96], rsi
-	mov	QWORD PTR [rbp-104], rdx
-	mov	QWORD PTR [rbp-112], rcx
-	mov	DWORD PTR [rbp-116], r8d
-	mov	rbx, QWORD PTR [rbp-88]
-	mov	rax, rbx
-	sub	rax, 1
-	mov	QWORD PTR [rbp-64], rax
-	mov	r11, rbx
-	mov	r12d, 0
-	mov	r12, QWORD PTR [rbp-88]
-	mov	rax, r12
-	sub	rax, 1
-	mov	QWORD PTR [rbp-72], rax
-	mov	r13, r12
-	mov	r14d, 0
-	mov	r13, QWORD PTR [rbp-88]
-	mov	rax, r13
-	sub	rax, 1
-	mov	QWORD PTR [rbp-80], rax
-	mov	r9, r13
-	mov	r10d, 0
-	mov	eax, DWORD PTR .LC7[rip]
-	mov	DWORD PTR [rbp-36], eax
-	mov	DWORD PTR [rbp-44], 0
-	jmp	.L25
-.L38:
-	mov	DWORD PTR [rbp-52], 0
-	jmp	.L26
-.L37:
-	mov	eax, DWORD PTR [rbp-44]
-	mov	DWORD PTR [rbp-40], eax
-	jmp	.L27
-.L36:
-	mov	eax, DWORD PTR [rbp-52]
-	mov	DWORD PTR [rbp-48], eax
-	jmp	.L28
-.L33:
-	mov	DWORD PTR [rbp-56], 0
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbx
+	subq	$96, %rsp
+	movq	%rdi, -88(%rbp)
+	movq	%rsi, -96(%rbp)
+	movq	%rdx, -104(%rbp)
+	movq	%rcx, -112(%rbp)
+	movl	%r8d, -116(%rbp)
+	movq	-88(%rbp), %rbx
+	movq	%rbx, %rax
+	subq	$1, %rax
+	movq	%rax, -64(%rbp)
+	movq	%rbx, %r11
+	movl	$0, %r12d
+	movq	-88(%rbp), %r12
+	movq	%r12, %rax
+	subq	$1, %rax
+	movq	%rax, -72(%rbp)
+	movq	%r12, %r13
+	movl	$0, %r14d
+	movq	-88(%rbp), %r13
+	movq	%r13, %rax
+	subq	$1, %rax
+	movq	%rax, -80(%rbp)
+	movq	%r13, %r9
+	movl	$0, %r10d
+	movl	.LC1(%rip), %eax
+	movl	%eax, -36(%rbp)
+	movl	$0, -48(%rbp)
 	jmp	.L29
-.L30:
-	mov	eax, DWORD PTR [rbp-40]
-	cdqe
-	imul	rax, rbx
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-96]
-	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-56]
-	cdqe
-	movss	xmm1, DWORD PTR [rdx+rax*4]
-	mov	eax, DWORD PTR [rbp-56]
-	cdqe
-	imul	rax, r12
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-104]
-	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-48]
-	cdqe
-	movss	xmm0, DWORD PTR [rdx+rax*4]
-	mulss	xmm0, xmm1
-	movss	xmm1, DWORD PTR [rbp-36]
-	addss	xmm0, xmm1
-	movss	DWORD PTR [rbp-36], xmm0
-	add	DWORD PTR [rbp-56], 1
-.L29:
-	mov	eax, DWORD PTR [rbp-56]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
-	jb	.L30
-	mov	eax, DWORD PTR [rbp-40]
-	cdqe
-	imul	rax, r13
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-112]
-	lea	rcx, [rdx+rax]
-	mov	eax, DWORD PTR [rbp-48]
-	movsx	rdx, eax
-	mov	eax, DWORD PTR [rbp-36]
-	mov	DWORD PTR [rcx+rdx*4], eax
-	mov	eax, DWORD PTR .LC7[rip]
-	mov	DWORD PTR [rbp-36], eax
-	add	DWORD PTR [rbp-48], 1
-.L28:
-	cvtsi2sd	xmm3, DWORD PTR [rbp-48]
-	movsd	QWORD PTR [rbp-128], xmm3
-	mov	rax, QWORD PTR [rbp-88]
-	test	rax, rax
-	js	.L31
-	cvtsi2sd	xmm0, rax
+.L42:
+	movl	$0, -56(%rbp)
+	jmp	.L30
+.L41:
+	movl	$0, -40(%rbp)
+	jmp	.L31
+.L40:
+	movl	-48(%rbp), %eax
+	movl	%eax, -44(%rbp)
 	jmp	.L32
-.L31:
-	mov	rdx, rax
-	shr	rdx
-	and	eax, 1
-	or	rdx, rax
-	cvtsi2sd	xmm0, rdx
-	addsd	xmm0, xmm0
-.L32:
-	mov	eax, DWORD PTR [rbp-116]
-	mov	edx, DWORD PTR [rbp-52]
-	add	eax, edx
-	sub	eax, 1
-	cvtsi2sd	xmm2, eax
-	movapd	xmm1, xmm0
-	movapd	xmm0, xmm2
-	call	fmin
-	ucomisd	xmm0, QWORD PTR [rbp-128]
-	ja	.L33
-	add	DWORD PTR [rbp-40], 1
-.L27:
-	cvtsi2sd	xmm4, DWORD PTR [rbp-40]
-	movsd	QWORD PTR [rbp-128], xmm4
-	mov	rax, QWORD PTR [rbp-88]
-	test	rax, rax
+.L39:
+	movl	-56(%rbp), %eax
+	movl	%eax, -52(%rbp)
+	jmp	.L33
+.L36:
+	movl	-40(%rbp), %eax
+	cltq
+	imulq	%rbx, %rax
+	leaq	0(,%rax,4), %rdx
+	movq	-96(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-52(%rbp), %eax
+	cltq
+	movss	(%rdx,%rax,4), %xmm1
+	movl	-52(%rbp), %eax
+	cltq
+	imulq	%r12, %rax
+	leaq	0(,%rax,4), %rdx
+	movq	-104(%rbp), %rax
+	addq	%rax, %rdx
+	movl	-44(%rbp), %eax
+	cltq
+	movss	(%rdx,%rax,4), %xmm0
+	mulss	%xmm1, %xmm0
+	movss	-36(%rbp), %xmm1
+	addss	%xmm1, %xmm0
+	movss	%xmm0, -36(%rbp)
+	addl	$1, -52(%rbp)
+.L33:
+	cvtsi2sd	-52(%rbp), %xmm3
+	movsd	%xmm3, -128(%rbp)
+	movq	-88(%rbp), %rax
+	testq	%rax, %rax
 	js	.L34
-	cvtsi2sd	xmm0, rax
+	cvtsi2sdq	%rax, %xmm0
 	jmp	.L35
 .L34:
-	mov	rdx, rax
-	shr	rdx
-	and	eax, 1
-	or	rdx, rax
-	cvtsi2sd	xmm0, rdx
-	addsd	xmm0, xmm0
+	movq	%rax, %rdx
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
 .L35:
-	mov	eax, DWORD PTR [rbp-116]
-	mov	edx, DWORD PTR [rbp-44]
-	add	eax, edx
-	sub	eax, 1
-	cvtsi2sd	xmm2, eax
-	movapd	xmm1, xmm0
-	movapd	xmm0, xmm2
+	movl	-116(%rbp), %eax
+	movl	-56(%rbp), %edx
+	addl	%edx, %eax
+	cvtsi2sd	%eax, %xmm2
+	movapd	%xmm0, %xmm1
+	movapd	%xmm2, %xmm0
 	call	fmin
-	ucomisd	xmm0, QWORD PTR [rbp-128]
+	ucomisd	-128(%rbp), %xmm0
 	ja	.L36
-	mov	eax, DWORD PTR [rbp-116]
-	add	DWORD PTR [rbp-52], eax
-.L26:
-	mov	eax, DWORD PTR [rbp-52]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
-	jb	.L37
-	mov	eax, DWORD PTR [rbp-116]
-	add	DWORD PTR [rbp-44], eax
-.L25:
-	mov	eax, DWORD PTR [rbp-44]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
-	jb	.L38
-	add	rsp, 96
-	pop	rbx
-	pop	r12
-	pop	r13
-	pop	r14
-	pop	rbp
+	movl	-40(%rbp), %eax
+	cltq
+	imulq	%r13, %rax
+	leaq	0(,%rax,4), %rdx
+	movq	-112(%rbp), %rax
+	leaq	(%rdx,%rax), %rcx
+	movl	-44(%rbp), %eax
+	movslq	%eax, %rdx
+	movl	-36(%rbp), %eax
+	movl	%eax, (%rcx,%rdx,4)
+	movl	.LC1(%rip), %eax
+	movl	%eax, -36(%rbp)
+	addl	$1, -44(%rbp)
+.L32:
+	cvtsi2sd	-44(%rbp), %xmm4
+	movsd	%xmm4, -128(%rbp)
+	movq	-88(%rbp), %rax
+	testq	%rax, %rax
+	js	.L37
+	cvtsi2sdq	%rax, %xmm0
+	jmp	.L38
+.L37:
+	movq	%rax, %rdx
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+.L38:
+	movl	-116(%rbp), %eax
+	movl	-48(%rbp), %edx
+	addl	%edx, %eax
+	cvtsi2sd	%eax, %xmm2
+	movapd	%xmm0, %xmm1
+	movapd	%xmm2, %xmm0
+	call	fmin
+	ucomisd	-128(%rbp), %xmm0
+	ja	.L39
+	addl	$1, -40(%rbp)
+.L31:
+	movl	-40(%rbp), %eax
+	cltq
+	cmpq	-88(%rbp), %rax
+	jb	.L40
+	movl	-116(%rbp), %eax
+	addl	%eax, -56(%rbp)
+.L30:
+	movl	-56(%rbp), %eax
+	cltq
+	cmpq	-88(%rbp), %rax
+	jb	.L41
+	movl	-116(%rbp), %eax
+	addl	%eax, -48(%rbp)
+.L29:
+	movl	-48(%rbp), %eax
+	cltq
+	cmpq	-88(%rbp), %rax
+	jb	.L42
+	addq	$96, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%rbp
 	ret
 	.size	multiply_tiled, .-multiply_tiled
 	.section	.rodata
-	.align 8
+	.align 4
 .LC1:
+	.long	0
+	.align 8
+.LC2:
 	.long	0
 	.long	1093567616
 	.align 8
-.LC3:
+.LC4:
 	.long	0
 	.long	1082130432
 	.align 4
-.LC4:
+.LC5:
 	.long	1325400064
-	.align 4
-.LC7:
-	.long	0
 	.ident	"GCC: (GNU) 4.8.3 20140911 (Red Hat 4.8.3-9)"
 	.section	.note.GNU-stack,"",@progbits
