@@ -126,13 +126,13 @@ void multiply_tiled(size_t m,float A[m][m],float B[m][m],float X[m][m],int tile_
     //Vertical tile direction
     for (kk=0; kk<m; kk+=tile_size) {
       for (i=0; i<m; i++) {
-        //Kernel
+        //Each tile
         for (j=jj; j < fmin(jj+tile_size,m); j++) {
-          sum = 0.0;
           for (k=kk; k < fmin(kk+tile_size,m); k++) {
             sum += A[i][k] * B[k][j];
           }
-          X[i][j] += sum;
+          X[i][j] = sum;
+          sum = 0.0;
         }
       }
     }
