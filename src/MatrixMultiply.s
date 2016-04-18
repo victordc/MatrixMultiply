@@ -570,80 +570,81 @@ multiply_basic:
 multiply_tiled:
 	push	rbp
 	mov	rbp, rsp
+	push	r15
 	push	r14
 	push	r13
 	push	r12
 	push	rbx
-	sub	rsp, 96
-	mov	QWORD PTR [rbp-88], rdi
-	mov	QWORD PTR [rbp-96], rsi
-	mov	QWORD PTR [rbp-104], rdx
-	mov	QWORD PTR [rbp-112], rcx
-	mov	DWORD PTR [rbp-116], r8d
-	mov	rbx, QWORD PTR [rbp-88]
-	mov	rax, rbx
-	sub	rax, 1
-	mov	QWORD PTR [rbp-64], rax
-	mov	r11, rbx
-	mov	r12d, 0
-	mov	r12, QWORD PTR [rbp-88]
+	sub	rsp, 120
+	mov	QWORD PTR [rbp-104], rdi
+	mov	QWORD PTR [rbp-112], rsi
+	mov	QWORD PTR [rbp-120], rdx
+	mov	QWORD PTR [rbp-128], rcx
+	mov	DWORD PTR [rbp-132], r8d
+	mov	r12, QWORD PTR [rbp-104]
 	mov	rax, r12
 	sub	rax, 1
-	mov	QWORD PTR [rbp-72], rax
-	mov	r13, r12
-	mov	r14d, 0
-	mov	r13, QWORD PTR [rbp-88]
+	mov	QWORD PTR [rbp-80], rax
+	mov	QWORD PTR [rbp-160], r12
+	mov	QWORD PTR [rbp-152], 0
+	mov	r13, QWORD PTR [rbp-104]
 	mov	rax, r13
 	sub	rax, 1
-	mov	QWORD PTR [rbp-80], rax
-	mov	r9, r13
+	mov	QWORD PTR [rbp-88], rax
+	mov	r14, r13
+	mov	r15d, 0
+	mov	rbx, QWORD PTR [rbp-104]
+	mov	rax, rbx
+	sub	rax, 1
+	mov	QWORD PTR [rbp-96], rax
+	mov	r9, rbx
 	mov	r10d, 0
 	mov	eax, DWORD PTR .LC1[rip]
-	mov	DWORD PTR [rbp-36], eax
-	mov	DWORD PTR [rbp-48], 0
+	mov	DWORD PTR [rbp-52], eax
+	mov	DWORD PTR [rbp-64], 0
 	jmp	.L29
 .L42:
-	mov	DWORD PTR [rbp-56], 0
+	mov	DWORD PTR [rbp-72], 0
 	jmp	.L30
 .L41:
-	mov	DWORD PTR [rbp-40], 0
+	mov	DWORD PTR [rbp-56], 0
 	jmp	.L31
 .L40:
-	mov	eax, DWORD PTR [rbp-48]
-	mov	DWORD PTR [rbp-44], eax
+	mov	eax, DWORD PTR [rbp-64]
+	mov	DWORD PTR [rbp-60], eax
 	jmp	.L32
 .L39:
-	mov	eax, DWORD PTR [rbp-56]
-	mov	DWORD PTR [rbp-52], eax
+	mov	eax, DWORD PTR [rbp-72]
+	mov	DWORD PTR [rbp-68], eax
 	jmp	.L33
 .L36:
-	mov	eax, DWORD PTR [rbp-40]
-	cdqe
-	imul	rax, rbx
-	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-96]
-	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-52]
-	cdqe
-	movss	xmm1, DWORD PTR [rdx+rax*4]
-	mov	eax, DWORD PTR [rbp-52]
+	mov	eax, DWORD PTR [rbp-56]
 	cdqe
 	imul	rax, r12
 	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-104]
+	mov	rax, QWORD PTR [rbp-112]
 	add	rdx, rax
-	mov	eax, DWORD PTR [rbp-44]
+	mov	eax, DWORD PTR [rbp-68]
+	cdqe
+	movss	xmm1, DWORD PTR [rdx+rax*4]
+	mov	eax, DWORD PTR [rbp-68]
+	cdqe
+	imul	rax, r13
+	lea	rdx, [0+rax*4]
+	mov	rax, QWORD PTR [rbp-120]
+	add	rdx, rax
+	mov	eax, DWORD PTR [rbp-60]
 	cdqe
 	movss	xmm0, DWORD PTR [rdx+rax*4]
 	mulss	xmm0, xmm1
-	movss	xmm1, DWORD PTR [rbp-36]
+	movss	xmm1, DWORD PTR [rbp-52]
 	addss	xmm0, xmm1
-	movss	DWORD PTR [rbp-36], xmm0
-	add	DWORD PTR [rbp-52], 1
+	movss	DWORD PTR [rbp-52], xmm0
+	add	DWORD PTR [rbp-68], 1
 .L33:
-	cvtsi2sd	xmm3, DWORD PTR [rbp-52]
-	movsd	QWORD PTR [rbp-128], xmm3
-	mov	rax, QWORD PTR [rbp-88]
+	cvtsi2sd	xmm3, DWORD PTR [rbp-68]
+	movsd	QWORD PTR [rbp-160], xmm3
+	mov	rax, QWORD PTR [rbp-104]
 	test	rax, rax
 	js	.L34
 	cvtsi2sd	xmm0, rax
@@ -656,32 +657,41 @@ multiply_tiled:
 	cvtsi2sd	xmm0, rdx
 	addsd	xmm0, xmm0
 .L35:
-	mov	eax, DWORD PTR [rbp-116]
-	mov	edx, DWORD PTR [rbp-56]
+	mov	eax, DWORD PTR [rbp-132]
+	mov	edx, DWORD PTR [rbp-72]
 	add	eax, edx
 	cvtsi2sd	xmm2, eax
 	movapd	xmm1, xmm0
 	movapd	xmm0, xmm2
 	call	fmin
-	ucomisd	xmm0, QWORD PTR [rbp-128]
+	ucomisd	xmm0, QWORD PTR [rbp-160]
 	ja	.L36
-	mov	eax, DWORD PTR [rbp-40]
+	mov	eax, DWORD PTR [rbp-56]
 	cdqe
-	imul	rax, r13
+	imul	rax, rbx
 	lea	rdx, [0+rax*4]
-	mov	rax, QWORD PTR [rbp-112]
-	lea	rcx, [rdx+rax]
-	mov	eax, DWORD PTR [rbp-44]
-	movsx	rdx, eax
-	mov	eax, DWORD PTR [rbp-36]
-	mov	DWORD PTR [rcx+rdx*4], eax
+	mov	rax, QWORD PTR [rbp-128]
+	add	rdx, rax
+	mov	eax, DWORD PTR [rbp-56]
+	cdqe
+	imul	rax, rbx
+	lea	rcx, [0+rax*4]
+	mov	rax, QWORD PTR [rbp-128]
+	add	rcx, rax
+	mov	eax, DWORD PTR [rbp-60]
+	cdqe
+	movss	xmm0, DWORD PTR [rcx+rax*4]
+	addss	xmm0, DWORD PTR [rbp-52]
+	mov	eax, DWORD PTR [rbp-60]
+	cdqe
+	movss	DWORD PTR [rdx+rax*4], xmm0
 	mov	eax, DWORD PTR .LC1[rip]
-	mov	DWORD PTR [rbp-36], eax
-	add	DWORD PTR [rbp-44], 1
+	mov	DWORD PTR [rbp-52], eax
+	add	DWORD PTR [rbp-60], 1
 .L32:
-	cvtsi2sd	xmm4, DWORD PTR [rbp-44]
-	movsd	QWORD PTR [rbp-128], xmm4
-	mov	rax, QWORD PTR [rbp-88]
+	cvtsi2sd	xmm4, DWORD PTR [rbp-60]
+	movsd	QWORD PTR [rbp-160], xmm4
+	mov	rax, QWORD PTR [rbp-104]
 	test	rax, rax
 	js	.L37
 	cvtsi2sd	xmm0, rax
@@ -694,40 +704,41 @@ multiply_tiled:
 	cvtsi2sd	xmm0, rdx
 	addsd	xmm0, xmm0
 .L38:
-	mov	eax, DWORD PTR [rbp-116]
-	mov	edx, DWORD PTR [rbp-48]
+	mov	eax, DWORD PTR [rbp-132]
+	mov	edx, DWORD PTR [rbp-64]
 	add	eax, edx
 	cvtsi2sd	xmm2, eax
 	movapd	xmm1, xmm0
 	movapd	xmm0, xmm2
 	call	fmin
-	ucomisd	xmm0, QWORD PTR [rbp-128]
+	ucomisd	xmm0, QWORD PTR [rbp-160]
 	ja	.L39
-	add	DWORD PTR [rbp-40], 1
+	add	DWORD PTR [rbp-56], 1
 .L31:
-	mov	eax, DWORD PTR [rbp-40]
-	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
-	jb	.L40
-	mov	eax, DWORD PTR [rbp-116]
-	add	DWORD PTR [rbp-56], eax
-.L30:
 	mov	eax, DWORD PTR [rbp-56]
 	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
-	jb	.L41
-	mov	eax, DWORD PTR [rbp-116]
-	add	DWORD PTR [rbp-48], eax
-.L29:
-	mov	eax, DWORD PTR [rbp-48]
+	cmp	rax, QWORD PTR [rbp-104]
+	jb	.L40
+	mov	eax, DWORD PTR [rbp-132]
+	add	DWORD PTR [rbp-72], eax
+.L30:
+	mov	eax, DWORD PTR [rbp-72]
 	cdqe
-	cmp	rax, QWORD PTR [rbp-88]
+	cmp	rax, QWORD PTR [rbp-104]
+	jb	.L41
+	mov	eax, DWORD PTR [rbp-132]
+	add	DWORD PTR [rbp-64], eax
+.L29:
+	mov	eax, DWORD PTR [rbp-64]
+	cdqe
+	cmp	rax, QWORD PTR [rbp-104]
 	jb	.L42
-	add	rsp, 96
+	add	rsp, 120
 	pop	rbx
 	pop	r12
 	pop	r13
 	pop	r14
+	pop	r15
 	pop	rbp
 	ret
 	.size	multiply_tiled, .-multiply_tiled
