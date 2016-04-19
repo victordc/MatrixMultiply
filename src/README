@@ -1,0 +1,5 @@
+# To generate assembly file:
+gcc -msse -fno-asynchronous-unwind-tables -fno-dwarf2-cfi-asm -masm=intel -ftree-vectorize MatrixMultiply.c -S
+
+# To generate executable:
+gcc -msse -fno-asynchronous-unwind-tables -fno-dwarf2-cfi-asm -masm=intel -ftree-vectorize MatrixMultiply.c -lm -o MatrixMultiply
